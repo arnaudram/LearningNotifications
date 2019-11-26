@@ -2,7 +2,9 @@ package com.example.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -63,6 +65,26 @@ public class Notifications {
 
                               showNotification(context,builder,notificationId);
 
+
+
+
+    }
+    public static void onTapNotification(Context context, String channelId, String contentText,
+                                         NotificationChannel notificationChannel, int notificationId, PendingIntent pendingIntent){
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(context,channelId)
+                .setSmallIcon(R.drawable.ic_announcement_black_24dp)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setContentTitle(" Notification Action Tap")
+                .setContentText(contentText)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(contentText));
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_notification);
+        builder.setLargeIcon(largeIcon).setStyle(new NotificationCompat.BigPictureStyle().bigPicture(largeIcon).bigLargeIcon(null));
+        builder.setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        createNotificationChannel(context, notificationChannel);
+
+        showNotification(context,builder,notificationId);
 
 
 
